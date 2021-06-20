@@ -27,8 +27,8 @@ import (
 	genericapiserver "k8s.io/apiserver/pkg/server"
 	genericoptions "k8s.io/apiserver/pkg/server/options"
 
-	"github.com/programming-kubernetes/pizza-apiserver/pkg/admission/plugin/pizzatoppings"
 	"github.com/programming-kubernetes/pizza-apiserver/pkg/admission/custominitializer"
+	"github.com/programming-kubernetes/pizza-apiserver/pkg/admission/plugin/pizzatoppings"
 	"github.com/programming-kubernetes/pizza-apiserver/pkg/apis/restaurant/v1alpha1"
 	"github.com/programming-kubernetes/pizza-apiserver/pkg/apiserver"
 	clientset "github.com/programming-kubernetes/pizza-apiserver/pkg/generated/clientset/versioned"
@@ -48,10 +48,10 @@ func NewCustomServerOptions() *CustomServerOptions {
 		RecommendedOptions: genericoptions.NewRecommendedOptions(
 			defaultEtcdPathPrefix,
 			apiserver.Codecs.LegacyCodec(v1alpha1.SchemeGroupVersion),
-			genericoptions.NewProcessInfo("pizza-apiserver", "pizza-apiserver"),
 		),
 	}
 
+	// o.RecommendedOptions.Etcd.StorageConfig.EncodeVersioner = runtime.NewMultiGroupVersioner(v1alpha1.SchemeGroupVersion, schema.GroupKind{Group: v1alpha1.GroupName})
 	return o
 }
 
