@@ -55,16 +55,6 @@ func RegisterConversions(s *runtime.Scheme) error {
 	}); err != nil {
 		return err
 	}
-	if err := s.AddGeneratedConversionFunc((*PizzaSpec)(nil), (*restaurant.PizzaSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_v1alpha1_PizzaSpec_To_restaurant_PizzaSpec(a.(*PizzaSpec), b.(*restaurant.PizzaSpec), scope)
-	}); err != nil {
-		return err
-	}
-	if err := s.AddGeneratedConversionFunc((*restaurant.PizzaSpec)(nil), (*PizzaSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
-		return Convert_restaurant_PizzaSpec_To_v1alpha1_PizzaSpec(a.(*restaurant.PizzaSpec), b.(*PizzaSpec), scope)
-	}); err != nil {
-		return err
-	}
 	if err := s.AddGeneratedConversionFunc((*PizzaStatus)(nil), (*restaurant.PizzaStatus)(nil), func(a, b interface{}, scope conversion.Scope) error {
 		return Convert_v1alpha1_PizzaStatus_To_restaurant_PizzaStatus(a.(*PizzaStatus), b.(*restaurant.PizzaStatus), scope)
 	}); err != nil {
@@ -202,10 +192,8 @@ func autoConvert_restaurant_PizzaSpec_To_v1alpha1_PizzaSpec(in *restaurant.Pizza
 		in, out := &in.Toppings, &out.Toppings
 		*out = make([]string, len(*in))
 		for i := range *in {
-			// TODO: Inefficient conversion - can we improve it?
-			if err := s.Convert(&(*in)[i], &(*out)[i]); err != nil {
-				return err
-			}
+			// FIXME: Provide conversion function to convert restaurant.PizzaTopping to string
+			compileErrorOnMissingConversion()
 		}
 	} else {
 		out.Toppings = nil
